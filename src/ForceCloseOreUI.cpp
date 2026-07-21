@@ -407,20 +407,10 @@ struct ConfigFiles {
 };
 
 ConfigFiles resolveConfigFiles() {
-  std::vector<fs::path> candidates = getConfigDirCandidates();
-  fs::path target_dir = selectWritableConfigDir(candidates);
-  fs::path target = target_dir / kConfigFileName;
+    constexpr const char* kConfig =
+        "/sdcard/games/ForceCloseOreUI/config.json";
 
-  if (pathExists(target))
-    return {target, target};
-
-  for (const auto &dir : candidates) {
-    fs::path candidate = dir / kConfigFileName;
-    if (pathExists(candidate))
-      return {candidate, target};
-  }
-
-  return {{}, target};
+    return {fs::path(kConfig), fs::path(kConfig)};
 }
 
 std::string trimAscii(std::string value) {
